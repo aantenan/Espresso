@@ -8,7 +8,7 @@ import java.util.Date;
  * {@code WhenFunction} is an extension function over {@link SimpleTestNode} for testing {@link
  * org.espresso.SqlEngine}.
  *
- * @author <a href="mailto:Brian.Oxley@tbd.com">Brian Oxley</a>
+ * @author <a href="mailto:binkley@alumni.rice.edu">B. K. Oxley (binkley)</a>
  */
 public class WhenFunction {
     /**

@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * {@code Sets} holds common static methods on sets.
  *
- * @author <a href="mailto:Brian.Oxley@tbd.com">Brian Oxley</a>
+ * @author <a href="mailto:binkley@alumni.rice.edu">B. K. Oxley (binkley)</a>
  * @see java.util.Collections Java Collections
  */
 public class Sets {
@@ -65,14 +65,14 @@ public class Sets {
             }
         };
     }
-    
+
     public static <T> Set<T> newHashSet(final Iterator<T> iterator) {
         final Set<T> set = new HashSet<T>();
         while (iterator.hasNext())
             set.add(iterator.next());
         return set;
     }
-    
+
     public static <T> Set<T> newHashSet(final T... elements) {
         final Set<T> set = new HashSet<T>(elements.length, 1.0F);
         for (final T element : elements)

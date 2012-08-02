@@ -32,7 +32,7 @@ import static java.util.Collections.emptyMap;
  *
  * @param <T> the cache element type
  *
- * @author <a href="mailto:Brian.Oxley@tbd.com">Brian Oxley</a>
+ * @author <a href="mailto:binkley@alumni.rice.edu">B. K. Oxley (binkley)</a>
  * @todo Replace <T> with E extends Element<E> once deal cache uses generic cache
  */
 public class Indices<T> {
@@ -111,8 +111,8 @@ public class Indices<T> {
     public final <V> Index<T, V> indexFor(final String column) {
         return (Index<T, V>) indexMap.get(column.toLowerCase());
     }
-    
+
     private HashMap newHashMapWithExpectedSize(final int size) {
         return new HashMap(size, 1.0F);
-    } 
+    }
 }
