@@ -10,7 +10,7 @@ import java.util.Iterator;
  * This class traverses a SqlExpression representing a where clause looking for opportunities to
  * restrict the V space based on indices.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public final class IndexRestrictor<T> {
 

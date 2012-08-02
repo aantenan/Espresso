@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Represents the possible comparisons (less than, greater than, etc.)
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlComparisonExpression<E> extends SqlExpression<E> {
     private final SqlComparisonOperator operator;

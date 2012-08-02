@@ -1,7 +1,7 @@
 package org.espresso.index;
 
 /**
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  *         <p/>
  *         This class can be used as base class for all indices that support the concept of
  *         ordering. Implementations of the "whichBucket" method should place elements into buckets

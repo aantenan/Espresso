@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  * Handles the date format most of the world uses.
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a> Date: 8/18/11
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a> Date: 8/18/11
  */
 public class StandardDateExtension
         implements DateExtension {

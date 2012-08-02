@@ -13,7 +13,7 @@ import static org.espresso.eval.SqlComparisonEvaluator.pickEvaluator;
 /**
  * Represents the SQL 'between' predicate, i.e., something BETWEEN this AND that.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlBetweenExpression<E>
         extends SqlExpression<E> {

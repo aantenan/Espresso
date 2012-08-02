@@ -18,7 +18,7 @@ import static org.espresso.eval.ClassUtil.asExpectedClass;
 /**
  * Represents a function call that may take 0 or more parameters.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlFunction<E>
         extends SqlExpression<E>

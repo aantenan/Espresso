@@ -2,6 +2,8 @@ package org.espresso.visitor;
 
 import org.apache.bcel.generic.*;
 
+import java.util.Iterator;
+
 import static org.espresso.visitor.JvmType.*;
 
 /**
@@ -9,9 +11,9 @@ import static org.espresso.visitor.JvmType.*;
  * leaves on the top of the stack when the code is executed. If type is object, it also
  * holds the name of the class it leaves on the to of the stack.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
-public class CodeSnippet {
+public class CodeSnippet implements Iterable<Instruction> {
     private final InstructionList code = new InstructionList();
     private JvmType jvmType;
     private Class clazz = null;
@@ -41,7 +43,7 @@ public class CodeSnippet {
     public CodeSnippet(final JvmType jvmType, final CodeSnippet... snippets) {
         this(jvmType, null, snippets);
     }
-
+    
     /**
      * Appends a new instruction to the end of the list.
      *
@@ -50,6 +52,10 @@ public class CodeSnippet {
      */
     public InstructionHandle append(final Instruction instruction) {
         return code.append(instruction);
+    }
+    
+    public void append(final CodeSnippet snippet) {
+        code.append(snippet.getCode());
     }
 
     /**
@@ -105,5 +111,10 @@ public class CodeSnippet {
      */
     public void setClazz(final Class clazz) {
         this.clazz = clazz;
-    } 
+    }
+
+    @Override
+    public Iterator<Instruction> iterator() {
+        return code.iterator();
+    }
 }

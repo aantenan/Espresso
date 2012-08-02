@@ -15,7 +15,7 @@ import static java.util.regex.Pattern.compile;
 /**
  * Represents the SQL clause column LIKE pattern.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlLikeExpression<E> extends SqlExpression<E> {
     private static final Pattern PERCENT = Pattern.compile("%");

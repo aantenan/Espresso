@@ -4,7 +4,7 @@ package org.espresso.token;
  * Represents the different possible comparisons and the conversion of a call to Comparable.compareTo
  * to a boolean indicating whether the condition was satisfied.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public enum SqlComparisonOperator {
     EQ {

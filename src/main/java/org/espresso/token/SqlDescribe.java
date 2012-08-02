@@ -5,7 +5,7 @@ package org.espresso.token;
  * but it should return a description of the class matching the table name, which
  * should include field names and types.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlDescribe implements SqlStatement {
     private final String tableName;

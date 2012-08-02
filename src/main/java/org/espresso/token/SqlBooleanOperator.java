@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Represents the possible boolean operators.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public enum SqlBooleanOperator {
     AND {

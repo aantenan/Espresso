@@ -17,7 +17,7 @@ import static java.lang.Character.toUpperCase;
 /**
  * Represents a database column, which, in turn, is associated witha field.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlColumn<E> implements SqlExpressionNode<E>, NumberWrapperSetter {
     private final static Map<Class, Map<String, Field>> fieldRowTypes = new ConcurrentHashMap<Class, Map<String, Field>>();

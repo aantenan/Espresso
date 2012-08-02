@@ -26,7 +26,7 @@ import static org.junit.Assert.assertThat;
 /**
  * {@code SqlEngineTest} tests {@link SqlEngine}.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlEngineTest {
     private static final String DEAL_TYPE = "Over the hill and far away";

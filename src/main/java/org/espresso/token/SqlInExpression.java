@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Representation of a SQL "in" predicate - column IN (option1, option2, ...)
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlInExpression<E>
         extends SqlExpression<E> {

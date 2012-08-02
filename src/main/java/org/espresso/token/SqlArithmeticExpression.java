@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Implements an arithmetic expression, i.e., one that involves +, -, * or /
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlArithmeticExpression<E> extends SqlExpression<E> {
     private final SqlArithmeticOperator operator;
@@ -22,6 +22,10 @@ public class SqlArithmeticExpression<E> extends SqlExpression<E> {
     @Override
     public String getOperator() {
         return operator.toString();
+    }
+
+    public SqlArithmeticOperator getRawOperator() {
+        return operator;
     }
 
     @Override

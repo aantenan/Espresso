@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Encapsulates a boolean operation, i.e., AND, OR or NOT.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlBooleanExpression<E> extends SqlExpression<E> {
     private final SqlBooleanOperator operator;

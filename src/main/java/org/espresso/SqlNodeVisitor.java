@@ -5,7 +5,7 @@ import org.espresso.token.*;
 import java.sql.SQLException;
 
 /**
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public abstract class SqlNodeVisitor<E> {
     public abstract void visit(final SqlColumn<E> node) throws SQLException;

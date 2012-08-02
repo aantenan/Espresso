@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Represents a number, which could be a long or a double.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlNumber<E> implements SqlExpressionNode<E> {
     private final NumberWrapper number;

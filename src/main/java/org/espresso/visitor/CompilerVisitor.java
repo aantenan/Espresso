@@ -20,10 +20,8 @@ import static org.apache.bcel.Constants.ACC_PUBLIC;
 
 
 /**
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
- *         Date: 7/26/12
- *         Time: 11:07 AM
- *         TODO: Document!
+ * Visitor that generates an instance of a class that executes the given SQL Statement
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
     private final ConstantPoolGen constPoolGen;
@@ -131,10 +129,10 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
 
     @Override
     public void visit(final SqlBetweenExpression node) throws SQLException {
-        codeStack.add(new CodeSnippetList());
+        codeStack.addFirst(new CodeSnippetList());
         super.visit(node);
         
-        final CodeSnippetList snippets = codeStack.getFirst();
+        final CodeSnippetList snippets = codeStack.removeFirst();
         // Stack has column value at the bottom, lower limit, and upper limit at the top
         // make helper method call  
         final CodeSnippet top = snippets.getSnippetAt(0);
@@ -195,7 +193,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         }
         // Load the constant to the top of the stack
         snippet.append(new LDC2_W(index));
-        codeStack.getFirst().appendSnippet(snippet);
+        codeStack.peekFirst().appendSnippet(snippet);
     }
 
     @Override
@@ -210,8 +208,27 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
 
     @Override
     public void visit(final SqlArithmeticExpression node) throws SQLException {
+        codeStack.addFirst(new CodeSnippetList());
         super.visit(node);
+        final CodeSnippetList snippets = codeStack.removeFirst();
 
+        // Adjust for the target type, it will be long or double; then append the 
+        // appropriate instruction at the end of the snippets - except the first,
+        // as we need two elements in the stack before we can operate on them
+        final JvmType targetType = targetType(snippets);
+        Class targetClazz = null;
+        boolean isFirst = true;
+        for (final CodeSnippet snippet : snippets) {
+            normalizeTopOfStackType(snippet, targetType);
+            if (isFirst) {
+                isFirst = false;
+                targetClazz = snippet.getClazz();
+            } else
+                snippet.append(node.getRawOperator().getInstruction(targetType == DOUBLE));
+        }
+
+        codeStack.peekFirst().appendSnippet(snippets.asSnippet(targetType, targetClazz));
+        
     }
 
     @Override
@@ -221,10 +238,10 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
 
     @Override
     public void visit(final SqlComparisonExpression node) throws SQLException {
-        codeStack.add(new CodeSnippetList());
+        codeStack.addFirst(new CodeSnippetList());
         super.visit(node);
         
-        final CodeSnippetList snippets = codeStack.getFirst();
+        final CodeSnippetList snippets = codeStack.removeFirst();
 
         // Objects are handled as Comparable, regardless of their type
         final CodeSnippet lhs = snippets.getSnippetAt(0);
@@ -252,7 +269,10 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         snippet.append(new INVOKESTATIC(helperIndex));
 
         // Top of stack now has a boolean
-        codeStack.peekFirst().appendSnippet(snippet);
+        final CodeSnippetList tos = codeStack.peekFirst();
+        tos.appendSnippet(lhs);
+        tos.appendSnippet(rhs);
+        tos.appendSnippet(snippet);
     }
 
     public static String convertToCamelBackGetter(final String name) {

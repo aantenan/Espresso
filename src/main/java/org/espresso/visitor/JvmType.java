@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * Also supplies a series of helper methods to handle conversions to different representations
  * required by the JVM, as well as some snippet manipulation.
  * 
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public enum JvmType {
     BOOLEAN('Z'),
@@ -138,7 +138,7 @@ public enum JvmType {
      * @return the all encompassing type.
      * @throws SQLException when there is no all encompassing type.
      */
-    public static JvmType targetType(final CodeSnippet... snippets) throws SQLException {
+    public static JvmType targetType(final CodeSnippetList snippets) throws SQLException {
         int target = 0;
         for (final CodeSnippet snippet : snippets)
             switch (snippet.getJvmType()) {

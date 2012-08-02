@@ -31,7 +31,7 @@ import static org.espresso.util.Sets.newConcurrentSet;
  * Finally, note that an index also behaves as a set - it can produce an iterator,
  * thus allowing the traversal of its elements.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  * @todo Replace <T> with E extends Element<E>
  */
 public abstract class Index<T, V>

@@ -3,7 +3,7 @@ package org.espresso.eval;
 /**
  * Several helper methods related to manipulating classes and conversions.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class ClassUtil {
     /**

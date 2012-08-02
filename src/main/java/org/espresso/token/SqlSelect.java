@@ -4,7 +4,7 @@ package org.espresso.token;
  * Representation of a subset of a SQL select statement. It does not support a list of columns to
  * select, and you can select from a single table only.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlSelect
         implements SqlStatement {

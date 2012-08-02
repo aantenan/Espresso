@@ -4,7 +4,7 @@ package org.espresso.token;
  * Represents a cancel statement, in the form of CANCEL query_id_string. Eventually
  * this will be used when we add support for continuous queries.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlCancel implements SqlStatement{
     private final String queryId;

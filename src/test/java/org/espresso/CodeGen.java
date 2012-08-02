@@ -12,7 +12,7 @@ import static org.apache.bcel.generic.Type.OBJECT;
  * Demonstrates the concept of creating a class that implements an interface on the
  * fly using the BCEL library.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class CodeGen {
     public static void main(String... args) throws IllegalAccessException, InstantiationException {

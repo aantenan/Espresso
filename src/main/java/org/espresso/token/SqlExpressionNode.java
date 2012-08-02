@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * This is an empty interface used to represent a "generic" node in a condition.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public interface SqlExpressionNode<E> {
     /**

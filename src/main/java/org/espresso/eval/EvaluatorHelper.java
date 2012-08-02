@@ -5,7 +5,7 @@ import org.espresso.token.SqlComparisonOperator;
 import static org.espresso.token.SqlComparisonOperator.*;
 
 /**
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class
         EvaluatorHelper {

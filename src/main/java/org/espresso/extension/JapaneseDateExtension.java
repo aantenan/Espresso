@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * Handles the upside down japanese date style
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  * */
 public class JapaneseDateExtension
         implements DateExtension {

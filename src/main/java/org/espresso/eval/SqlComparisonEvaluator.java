@@ -7,7 +7,7 @@ import static org.espresso.eval.ClassUtil.isNumber;
  * Implements the different possible numeric comparisons, or assumes the operands
  * implement "Comparable".
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public enum SqlComparisonEvaluator {
     LONG_LONG {

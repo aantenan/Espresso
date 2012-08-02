@@ -24,7 +24,7 @@ import java.util.List;
  * concept of extensions - those are objects with annotated methods that can be referred
  * to by the SQL code and called as part of the evaluation process.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlEngine<E> {
     private static final NotExtension NOT = new NotExtension();

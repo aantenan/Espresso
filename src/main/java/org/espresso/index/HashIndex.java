@@ -5,7 +5,7 @@ package org.espresso.index;
  * do not have the notion of ordering, this index does not support less than and greater than
  * operations.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class HashIndex<T, V>
         extends Index<T, V> {

@@ -5,7 +5,7 @@ package org.espresso.eval;
  * or a fixed representation. Also used to memoize the conversion operation, so we
  * don't have to test for what conversion to apply over and over again.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public enum NumberNormalizer {
     TO_DOUBLE {

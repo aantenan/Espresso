@@ -1,7 +1,7 @@
 package org.espresso.util;
 
 /**
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  *         Date: 8/2/12
  *         Time: 10:44 AM
  *         TODO: Document!

@@ -15,7 +15,7 @@ import java.sql.SQLSyntaxErrorException;
  * representing a SQL statement and returns the corresponding tree, throwing a {@code SQLException}
  * in case of errors.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public final class SqlParser {
     /**

@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Represents a string that is part of a where clause
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlString<E> implements SqlExpressionNode<E> {
     private final String string;

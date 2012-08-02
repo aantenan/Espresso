@@ -15,7 +15,7 @@ import java.util.List;
  * Runs different types of queries against a collection of 2,000,000 elements and capture
  * the times. Used to test performance of the SQL Engine.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class SqlEnginePerformance {
 

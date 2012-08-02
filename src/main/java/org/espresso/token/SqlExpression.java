@@ -13,7 +13,7 @@ import java.util.ListIterator;
  * SqlExpression has an operator (e.g., "+" or "and") and a list of
  * operands, which in turn can also be SqlExpressionNodes.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public abstract class SqlExpression<E>
         implements SqlExpressionNode<E>, Iterable<SqlExpressionNode> {

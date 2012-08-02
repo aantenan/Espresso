@@ -13,7 +13,7 @@ import java.util.Date;
  * If wider date ranges are required, we should change this class to pass the ranges as part of the
  * constructor.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class DateIndex<T>
         extends OrderedIndex<T, Date> {

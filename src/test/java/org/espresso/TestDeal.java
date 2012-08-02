@@ -6,7 +6,7 @@ import java.util.Date;
  * Simplified enriched deal, so we can test queries that closely match the deal cache without
  * introducing a dependency on the deal cache module.
  *
- * @author <a href="mailto:Alberto.Antenangeli@tbd.com">Alberto Antenangeli</a>
+ * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class TestDeal
         implements Cloneable {
