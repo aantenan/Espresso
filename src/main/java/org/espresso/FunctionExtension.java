@@ -12,8 +12,8 @@ import java.lang.reflect.Method;
  *         Time: 2:21 PM
  */
 public class FunctionExtension {
-    final Object target;
-    final Method method;
+    private final Object target;
+    private final Method method;
 
     public FunctionExtension(final Object target, final Method method) {
         this.target = target;

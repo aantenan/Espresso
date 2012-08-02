@@ -30,8 +30,8 @@ public class SqlEnginePerformance {
     
     private static void testCompiled(final String query, final List<TestDeal> store) throws SQLException {
         final SqlSelect statement = (SqlSelect) SqlParser.parse(query);
-        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
-        final Evaluator evaluator = visitor.compile(statement.getWhereClause());
+        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        final Evaluator evaluator = visitor.compile();
         long start = System.currentTimeMillis();
         for (final TestDeal deal : store)
             evaluator.matches(deal);

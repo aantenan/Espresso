@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
-public class CodeSnippetList implements Iterable<CodeSnippet> {
+class CodeSnippetList implements Iterable<CodeSnippet> {
     private final List<CodeSnippet> snippets = new ArrayList<CodeSnippet>();
 
     public void appendSnippet(final CodeSnippet snippet) {

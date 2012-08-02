@@ -34,7 +34,7 @@ public class CodeGen {
      * @throws InstantiationException propagated from the new ClassLoader below
      * @throws IllegalAccessException propagated from the new ClassLoader below
      */
-    public static Evaluator getEvaluator() throws InstantiationException, IllegalAccessException {
+    private static Evaluator getEvaluator() throws InstantiationException, IllegalAccessException {
 
 
         // All constants referred to by our class, including fields, methods, and strings.

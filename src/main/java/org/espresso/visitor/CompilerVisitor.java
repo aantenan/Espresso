@@ -21,12 +21,18 @@ import static org.apache.bcel.Constants.ACC_PUBLIC;
 
 /**
  * Visitor that generates an instance of a class that executes the given SQL Statement
+ * <br/>
+ * This class is NOT thread safe. It is intended to be used once and only once.
+ *
  * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
+ * TODO: See if we can make the visitor reusable.
  */
 public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
+    private final Class<E> rowType;
+    private final SqlExpressionNode root;
+
     private final ConstantPoolGen constPoolGen;
     private final ClassGen classGen;
-    private final Class<E> rowType;
     private final Deque<CodeSnippetList> codeStack = new ArrayDeque<CodeSnippetList>();
 
     // Used to generate unique Evaluator class names: Evaluator1, Evaluator2, etc.
@@ -36,8 +42,9 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
     
     private static final EvaluatorLoader evaluatorLoader = new EvaluatorLoader();
 
-    public CompilerVisitor(final Class<E> noteType) {
+    public CompilerVisitor(final Class<E> noteType, final SqlExpressionNode root) {
         this.rowType = noteType;
+        this.root = root;
         constPoolGen = new ConstantPoolGen();
         
         generatedClassName = evaluatorFullName + generatedClassNumber.incrementAndGet();
@@ -45,7 +52,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
                 ACC_PUBLIC, new String[] {evaluatorFullName}, constPoolGen);
     }
     
-    public Evaluator compile(final SqlExpressionNode<E> root)
+    public Evaluator compile()
             throws SQLException {
 
         codeStack.add(new CodeSnippetList());
@@ -275,7 +282,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         tos.appendSnippet(snippet);
     }
 
-    public static String convertToCamelBackGetter(final String name) {
+    private static String convertToCamelBackGetter(final String name) {
         final StringBuilder builder = new StringBuilder("get");
         boolean toUpper = true;
         for (int i = 0; i < name.length(); i++) {
@@ -290,7 +297,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         return builder.toString();
     }
 
-    public static Class getGetterReturnType(final Class clazz, final String getter)
+    private static Class getGetterReturnType(final Class clazz, final String getter)
             throws NoSuchMethodException {
         return clazz.getMethod(getter).getReturnType();
     }

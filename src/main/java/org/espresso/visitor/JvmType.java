@@ -41,7 +41,7 @@ public enum JvmType {
      * This enum as the corresponding JVM char
      * @return the char
      */
-    public char asJvmTypeChar() {
+    char asJvmTypeChar() {
         return jvmType;
     }
 

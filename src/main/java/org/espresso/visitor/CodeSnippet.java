@@ -85,7 +85,7 @@ public class CodeSnippet implements Iterable<Instruction> {
      * Setter for the jvm type
      * @param jvmType the type
      */
-    public void setJvmType(final JvmType jvmType) {
+    void setJvmType(final JvmType jvmType) {
         this.jvmType = jvmType;
     }
 

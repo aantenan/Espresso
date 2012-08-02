@@ -30,8 +30,8 @@ public class CompilerVisitorTest {
     public void testBetween() throws SQLException {
         final SqlSelect statement = (SqlSelect) SqlParser.parse
                 ("select * from TestDeals where child between 1 and 5;");
-        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
-        final Evaluator evaluator = visitor.compile(statement.getWhereClause());
+        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        final Evaluator evaluator = visitor.compile();
         final TestDeal deal = new TestDeal();
 
         deal.setChild(3);
@@ -46,8 +46,8 @@ public class CompilerVisitorTest {
     public void testGreaterThanNumeric() throws SQLException {
         final SqlSelect statement = (SqlSelect) SqlParser.parse
                 ("select * from TestDeals where child > 2;");
-        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
-        final Evaluator evaluator = visitor.compile(statement.getWhereClause());
+        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        final Evaluator evaluator = visitor.compile();
         final TestDeal deal = new TestDeal();
 
         deal.setChild(3);
@@ -62,8 +62,8 @@ public class CompilerVisitorTest {
     public void testGreaterThanObject() throws SQLException {
         final SqlSelect statement = (SqlSelect) SqlParser.parse
                 ("select * from TestDeals where book > 'book1';");
-        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
-        final Evaluator evaluator = visitor.compile(statement.getWhereClause());
+        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        final Evaluator evaluator = visitor.compile();
         final TestDeal deal = new TestDeal();
 
         deal.setBook("book2");
@@ -77,8 +77,8 @@ public class CompilerVisitorTest {
     public void testLessThanFloat() throws SQLException {
         final SqlSelect statement = (SqlSelect) SqlParser.parse
                 ("select * from TestDeals where child < 2.0;");
-        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
-        final Evaluator evaluator = visitor.compile(statement.getWhereClause());
+        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        final Evaluator evaluator = visitor.compile();
         final TestDeal deal = new TestDeal();
 
         deal.setChild(1);
@@ -93,28 +93,28 @@ public class CompilerVisitorTest {
         final TestDeal deal = new TestDeal();
         deal.setChild(1);
 
-        CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
         SqlSelect statement = (SqlSelect) SqlParser.parse
                 ("select * from TestDeals where child < 1.0 + 1;");
-        Evaluator evaluator = visitor.compile(statement.getWhereClause());
+        CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        Evaluator evaluator = visitor.compile();
         assertTrue(evaluator.matches(deal));
 
-        visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
         statement = (SqlSelect) SqlParser.parse
                 ("select * from TestDeals where child < 3 - 1.0;");
-        evaluator = visitor.compile(statement.getWhereClause());
+        visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        evaluator = visitor.compile();
         assertTrue(evaluator.matches(deal));
 
-        visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
         statement = (SqlSelect) SqlParser.parse
                 ("select * from TestDeals where child < 2 * 3;");
-        evaluator = visitor.compile(statement.getWhereClause());
+        visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        evaluator = visitor.compile();
         assertTrue(evaluator.matches(deal));
 
-        visitor = new CompilerVisitor<TestDeal>(TestDeal.class);
         statement = (SqlSelect) SqlParser.parse
                 ("select * from TestDeals where child < 4.0 / 2;");
-        evaluator = visitor.compile(statement.getWhereClause());
+        visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        evaluator = visitor.compile();
         assertTrue(evaluator.matches(deal));
     }
 }

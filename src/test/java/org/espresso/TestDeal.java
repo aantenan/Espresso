@@ -134,10 +134,8 @@ public class TestDeal
             return false;
         if (!dealNumber.equals(that.dealNumber))
             return false;
-        if (!label.equals(that.label))
-            return false;
+        return label.equals(that.label);
 
-        return true;
     }
 
     @Override

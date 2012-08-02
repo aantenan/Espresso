@@ -32,15 +32,15 @@ import static org.espresso.util.Sets.newConcurrentSet;
  * thus allowing the traversal of its elements.
  *
  * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
- * @todo Replace <T> with E extends Element<E>
+ * todo: Replace <T> with E extends Element<E>
  */
 public abstract class Index<T, V>
         extends AbstractSet<T>
         implements Cloneable {
-    public static final int DEFAULT_BUCKETS = 1024;
+    private static final int DEFAULT_BUCKETS = 1024;
 
-    protected final Class<V> type;
-    protected final String name;
+    private final Class<V> type;
+    private final String name;
     protected final Getter<T, V> column;
     protected final int totalBuckets;
     private final Set<T>[] buckets;

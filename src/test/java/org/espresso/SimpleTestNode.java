@@ -7,7 +7,7 @@ import java.util.Date;
  *
  * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
-public class SimpleTestNode {
+class SimpleTestNode {
     public final String name;
     public final int age;
     public final String color;

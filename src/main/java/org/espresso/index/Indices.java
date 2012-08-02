@@ -33,7 +33,7 @@ import static java.util.Collections.emptyMap;
  * @param <T> the cache element type
  *
  * @author <a href="mailto:binkley@alumni.rice.edu">B. K. Oxley (binkley)</a>
- * @todo Replace <T> with E extends Element<E> once deal cache uses generic cache
+ * todo: Replace <T> with E extends Element<E> once deal cache uses generic cache
  */
 public class Indices<T> {
     private static final Indices<?> NONE = new Indices<Object>();

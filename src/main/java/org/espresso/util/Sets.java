@@ -2,9 +2,6 @@ package org.espresso.util;
 
 /**
  * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
- *         Date: 8/2/12
- *         Time: 10:44 AM
- *         TODO: Document!
  */
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -75,8 +72,7 @@ public class Sets {
 
     public static <T> Set<T> newHashSet(final T... elements) {
         final Set<T> set = new HashSet<T>(elements.length, 1.0F);
-        for (final T element : elements)
-            set.add(element);
+        Collections.addAll(set, elements);
         return set;
     }
 

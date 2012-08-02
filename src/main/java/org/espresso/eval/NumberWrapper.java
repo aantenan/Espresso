@@ -52,7 +52,7 @@ public final class NumberWrapper extends Number {
         return this;
     }
 
-    public void add(final NumberWrapper value) throws SQLException {
+    public void add(final NumberWrapper value) {
         if (this.isDouble) {
             if (value.isDouble)
                 this.doubleValue += value.doubleValue;
@@ -63,7 +63,7 @@ public final class NumberWrapper extends Number {
                     else this.longValue += value.longValue;
     }
 
-    public void subtract(final NumberWrapper value) throws SQLException {
+    public void subtract(final NumberWrapper value) {
         if (this.isDouble) {
             if (value.isDouble)
                 this.doubleValue -= value.doubleValue;
@@ -74,7 +74,7 @@ public final class NumberWrapper extends Number {
                     else this.longValue -= value.longValue;
     }
 
-    public void multiply(final NumberWrapper value) throws SQLException {
+    public void multiply(final NumberWrapper value) {
         if (this.isDouble) {
             if (value.isDouble)
                 this.doubleValue *= value.doubleValue;
@@ -85,7 +85,7 @@ public final class NumberWrapper extends Number {
                     else this.longValue *= value.longValue;
     }
 
-    public void divide(final NumberWrapper value) throws SQLException {
+    public void divide(final NumberWrapper value) {
         if (this.isDouble) {
             if (value.isDouble)
                 this.doubleValue /= value.doubleValue;

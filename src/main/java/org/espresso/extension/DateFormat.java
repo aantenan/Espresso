@@ -2,9 +2,6 @@ package org.espresso.extension;
 
 /**
  * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
- *         Date: 8/2/12
- *         Time: 10:51 AM
- *         TODO: Document!
  */
 
 import java.text.ParseException;
