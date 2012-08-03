@@ -42,8 +42,13 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
     
     private static final EvaluatorLoader evaluatorLoader = new EvaluatorLoader();
 
-    public CompilerVisitor(final Class<E> noteType, final SqlExpressionNode root) {
-        this.rowType = noteType;
+    /**
+     * Constructs a compiler for a given node tyope and where clause
+     * @param nodeType Type of node used to evaluate the where clause, needed for proper casting
+     * @param root the parsed where clause as a tree that returns a boolean
+     */
+    public CompilerVisitor(final Class<E> nodeType, final SqlExpressionNode root) {
+        this.rowType = nodeType;
         this.root = root;
         constPoolGen = new ConstantPoolGen();
         
@@ -51,7 +56,12 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         this.classGen = new ClassGen(generatedClassName, "java/lang/Object", generatedClassName + ".java",
                 ACC_PUBLIC, new String[] {evaluatorFullName}, constPoolGen);
     }
-    
+
+    /**
+     * Compiles the where clause and returns an instance of a class that can evaluate it
+     * @return Instance of a class that implements the Evaluator interface
+     * @throws SQLException in case anything goes wrong.
+     */
     public Evaluator compile()
             throws SQLException {
 
@@ -128,12 +138,21 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
             snippet.extendType();
 
             // And make the top of the stack reflect what we now have.
-            codeStack.peekFirst().appendSnippet(snippet);
+            codeStack.peekFirst().append(snippet);
         } catch (NoSuchMethodException e) {
             throw new SQLException("Missing getter " + getter + " for column " + node.getName(), e);
         }
     }
 
+    /**
+     * Processes expressions of type column between this and that. We push a new list on the code stack
+     * before calling super.visit(), so we are left three snippets: the call to the getter that
+     * corresponds to the column, and the evaluation of two expressions that corresponds to "this" and
+     * "that". We then consolidate the snippets, push the call to EvaluatorHelper.evalBetween to the
+     * end, and add this to the snippet list on the top of the code stack.
+     * @param node node to evaluate
+     * @throws SQLException if something goes wrong
+     */
     @Override
     public void visit(final SqlBetweenExpression node) throws SQLException {
         codeStack.addFirst(new CodeSnippetList());
@@ -153,7 +172,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
                 "evalBetween", signature);
         final CodeSnippet snippet = new CodeSnippet(JvmType.BOOLEAN, top, middle, bottom);
         snippet.append(new INVOKESTATIC(helperIndex));
-        codeStack.peekFirst().appendSnippet(snippet);
+        codeStack.peekFirst().append(snippet);
     }
 
     @Override
@@ -186,6 +205,11 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    /**
+     * For numbers, we add a snippet to the top of the code stack that pushes the
+     * constant to the top of the JVM stack.
+     * @param node
+     */
     @Override
     public void visit(final SqlNumber node) {
         int index;
@@ -200,9 +224,14 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         }
         // Load the constant to the top of the stack
         snippet.append(new LDC2_W(index));
-        codeStack.peekFirst().appendSnippet(snippet);
+        codeStack.peekFirst().append(snippet);
     }
 
+    /**
+     * For strings, we add a snippet to the top of the stack that pushes the
+     * reference to the string to the top of the JVM stack.
+     * @param node The string to push
+     */
     @Override
     public void visit(final SqlString node) {
         // This one is easy: add the string constant to the pool gen; add the
@@ -210,9 +239,19 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         final int index = constPoolGen.addString(node.getString());
         final CodeSnippet snippet = new CodeSnippet(OBJECT, String.class);
         snippet.append(new LDC(index));
-        codeStack.peekFirst().appendSnippet(snippet);
+        codeStack.peekFirst().append(snippet);
     }
 
+    /**
+     * Pushes a new list of snippet to the top of the code stack, then call
+     * super.visit(). This will create a series of snippets for each element of the
+     * expression. For example a + b + c + d generates four snippets. Then evaluate
+     * the target type depending on the snippet (long or double), append the appropriate
+     * conversions where required, and combine the snippets and the corresponding
+     * arithmetic expression.
+     * @param node node with the expression
+     * @throws SQLException if something goes wrong
+     */
     @Override
     public void visit(final SqlArithmeticExpression node) throws SQLException {
         codeStack.addFirst(new CodeSnippetList());
@@ -234,7 +273,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
                 snippet.append(node.getRawOperator().getInstruction(targetType == DOUBLE));
         }
 
-        codeStack.peekFirst().appendSnippet(snippets.asSnippet(targetType, targetClazz));
+        codeStack.peekFirst().append(snippets.asSnippet(targetType, targetClazz));
         
     }
 
@@ -243,6 +282,12 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         super.visit(node);
     }
 
+    /**
+     * Comparisons have a left and a righ hand side. We push a new list to the top of
+     * the code stack, then combine them along with a call to EvaluatorHelper.evalCompare.
+     * @param node the comparison node
+     * @throws SQLException if something goes wrong
+     */
     @Override
     public void visit(final SqlComparisonExpression node) throws SQLException {
         codeStack.addFirst(new CodeSnippetList());
@@ -277,11 +322,16 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
 
         // Top of stack now has a boolean
         final CodeSnippetList tos = codeStack.peekFirst();
-        tos.appendSnippet(lhs);
-        tos.appendSnippet(rhs);
-        tos.appendSnippet(snippet);
+        tos.append(lhs);
+        tos.append(rhs);
+        tos.append(snippet);
     }
 
+    /**
+     * Helper to convert a column NAME_LIKE_THIS to getNameLikeThis.
+     * @param name column name
+     * @return getter name
+     */
     private static String convertToCamelBackGetter(final String name) {
         final StringBuilder builder = new StringBuilder("get");
         boolean toUpper = true;
@@ -297,6 +347,13 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
         return builder.toString();
     }
 
+    /**
+     * Determines the return type of a given getter.
+     * @param clazz class where the getter is called
+     * @param getter name of the getter
+     * @return class returned by the getter
+     * @throws NoSuchMethodException if there is no such getter
+     */
     private static Class getGetterReturnType(final Class clazz, final String getter)
             throws NoSuchMethodException {
         return clazz.getMethod(getter).getReturnType();

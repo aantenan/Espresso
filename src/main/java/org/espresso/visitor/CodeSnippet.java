@@ -113,6 +113,10 @@ public class CodeSnippet implements Iterable<Instruction> {
         this.clazz = clazz;
     }
 
+    /**
+     * Allows us to iterate over the instructions of this snippet.
+     * @return the iterator
+     */
     @Override
     public Iterator<Instruction> iterator() {
         return code.iterator();
