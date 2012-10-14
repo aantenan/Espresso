@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Alberto Antenangeli
+ * Copyright 2012 Espresso Team
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import static java.util.Collections.emptyMap;
 
 /**
  * {@code Indices} are a collection of element cache indices.  Defining class factory methods on the
- * cache element for generaing indexes is best practice, supporting both Java and Spring wiring:
+ * cache element for generating indexes is best practice, supporting both Java and Spring wiring:
  * <pre>
  * &#64;Component
  * public final class EgIndices extends Indices&lt;EgElement&gt; {
