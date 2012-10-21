@@ -19,6 +19,7 @@ import org.espresso.SqlParser;
 import org.espresso.TestDeal;
 import org.espresso.eval.Evaluator;
 import org.espresso.token.SqlSelect;
+import org.espresso.token.SqlStatement;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +41,33 @@ public class CompilerVisitorTest {
     public void tearDown() throws Exception {
 
     }
-    
+
+    @Test
+    public void testIsNull() throws SQLException {
+        final SqlSelect statement = (SqlSelect) SqlParser.parse
+                ("select * from TestDeals where deal_type is null;");
+        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        final Evaluator evaluator = visitor.compile();
+        final TestDeal deal = new TestDeal();
+        deal.setDealType(null);
+        assertTrue(evaluator.matches(deal));
+        deal.setDealType("Not null");
+        assertFalse(evaluator.matches(deal));
+    }
+
+    @Test
+    public void testIsNotNull() throws SQLException {
+        final SqlSelect statement = (SqlSelect) SqlParser.parse
+                ("select * from TestDeals where deal_type is not null;");
+        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        final Evaluator evaluator = visitor.compile();
+        final TestDeal deal = new TestDeal();
+        deal.setDealType(null);
+        assertFalse(evaluator.matches(deal));
+        deal.setDealType("Not null");
+        assertTrue(evaluator.matches(deal));
+    }
+
     @Test
     public void testBetween() throws SQLException {
         final SqlSelect statement = (SqlSelect) SqlParser.parse

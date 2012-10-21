@@ -15,9 +15,11 @@
  */
 package org.espresso;
 
+import org.apache.bcel.Repository;
 import org.espresso.eval.Evaluator;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.generic.*;
+import org.espresso.eval.EvaluatorHelper;
 
 import static org.apache.bcel.Constants.ACC_PUBLIC;
 import static org.apache.bcel.generic.Type.BOOLEAN;
@@ -30,10 +32,17 @@ import static org.apache.bcel.generic.Type.OBJECT;
  * @author <a href="mailto:antenangeli@yahoo.com">Alberto Antenangeli</a>
  */
 public class CodeGen {
-    public static void main(String... args) throws IllegalAccessException, InstantiationException {
+    public static void main(String... args) throws IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException {
         System.out.println(getEvaluator().matches(null));
+
+        final JavaClass clazz = Repository.lookupClass(CodeGen.class.getName());
+        System.out.println(clazz.getMethod(CodeGen.class.getDeclaredMethod("test")).getCode().toString());
     }
 
+    private boolean test() {
+        final Object obj = null;
+        return EvaluatorHelper.evalIsNull(obj, true);
+    }
     /**
      * Creates an instance of the following class on the fly:
      *

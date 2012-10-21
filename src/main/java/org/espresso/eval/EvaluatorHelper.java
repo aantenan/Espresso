@@ -85,4 +85,8 @@ public class
         return operator.eval(lhs.compareTo(rhs));
     }
 
+    public static boolean evalIsNull(final Object test, final boolean checkIfNull) {
+        return test == null ? checkIfNull : !checkIfNull;
+    }
+
 }

@@ -206,18 +206,28 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
     }
 
     @Override
-    public void visit(final SqlIsNullExpression node) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void visit(final SqlIsNullExpression node) throws SQLException {
+        visit(node.getColumn());
+        final CodeSnippet snippet = new CodeSnippet(BOOLEAN);
+        final String signature = "(Ljava/lang/Object;Z)Z";
+        snippet.append(new ICONST(node.isNull() ? 1 : 0));
+        final int helperIndex = constPoolGen.addMethodref(EvaluatorHelper.class.getCanonicalName(),
+                "evalIsNull", signature);
+        snippet.append(new INVOKESTATIC(helperIndex));
+        codeStack.peekFirst().append(snippet);
     }
 
     @Override
     public void visit(final SqlLikeExpression node) {
+
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void visit(final SqlNull node) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        final CodeSnippet snippet = new CodeSnippet(null);
+        snippet.append(new ACONST_NULL());
+        codeStack.peekFirst().append(snippet);
     }
 
     /**

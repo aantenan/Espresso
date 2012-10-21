@@ -53,6 +53,10 @@ public class SqlIsNullExpression<E>
         return column;
     }
 
+    public boolean isNull() {
+        return isNull;
+    }
+
     @Override
     public String getOperator() {
         return isNull ? IS_NULL_OPERATOR : IS_NOT_NULL_OPERATOR;
