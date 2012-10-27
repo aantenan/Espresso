@@ -45,7 +45,6 @@ public class SqlEngine<E> {
     private static final NotExtension NOT = new NotExtension();
     private static final DateExtension DATE_EXTENSION = new StandardDateExtension();
 
-    private final Class<E> nodeType;
     private final SqlSelect select;
     private HashMap<String, FunctionExtension> functions;
     private DateExtension dateExtension;
@@ -64,7 +63,7 @@ public class SqlEngine<E> {
     public SqlEngine(final Class<E> nodeType, final String selectStatement,
             final Object... extensions)
             throws SQLException {
-        this.nodeType = nodeType;
+        Class<E> nodeType1 = nodeType;
         select = parse(terminate(selectStatement));
         select.setFromAlias(nodeType.getName());
         processExtensions(extensions);

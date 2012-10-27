@@ -35,7 +35,7 @@ public class ClassUtil {
      * @param clazz the class
      * @return whether this is a long, integer, short or a byte
      */
-    public static boolean isFixedPrecision(final Class clazz) {
+    private static boolean isFixedPrecision(final Class clazz) {
         return clazz == Long.class || clazz == Integer.class || clazz == Short.class || clazz == Byte.class;
     }
 

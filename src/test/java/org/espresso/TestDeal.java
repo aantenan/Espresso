@@ -147,9 +147,7 @@ public class TestDeal
             return false;
         if (!databaseName.equals(that.databaseName))
             return false;
-        if (!dealNumber.equals(that.dealNumber))
-            return false;
-        return label.equals(that.label);
+        return dealNumber.equals(that.dealNumber) && label.equals(that.label);
 
     }
 

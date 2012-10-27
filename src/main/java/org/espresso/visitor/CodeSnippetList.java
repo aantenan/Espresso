@@ -37,6 +37,10 @@ class CodeSnippetList implements Iterable<CodeSnippet> {
         snippets.add(snippet);
     }
 
+    public int size() {
+        return snippets.size();
+    }
+
     /**
      * Converts this list of snippets to an InstructionList
      * @return the instruction list

@@ -28,6 +28,8 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.espresso.token.SqlBooleanOperator.AND;
+import static org.espresso.token.SqlBooleanOperator.NOT;
 import static org.espresso.visitor.JvmType.*;
 import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
@@ -44,7 +46,7 @@ import static org.apache.bcel.Constants.ACC_PUBLIC;
  */
 public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
     private final Class<E> rowType;
-    private final SqlExpressionNode root;
+    private final SqlExpressionNode<E> root;
 
     private final ConstantPoolGen constPoolGen;
     private final ClassGen classGen;
@@ -58,11 +60,11 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
     private static final EvaluatorLoader evaluatorLoader = new EvaluatorLoader();
 
     /**
-     * Constructs a compiler for a given node tyope and where clause
+     * Constructs a compiler for a given node type and where clause
      * @param nodeType Type of node used to evaluate the where clause, needed for proper casting
      * @param root the parsed where clause as a tree that returns a boolean
      */
-    public CompilerVisitor(final Class<E> nodeType, final SqlExpressionNode root) {
+    public CompilerVisitor(final Class<E> nodeType, final SqlExpressionNode<E> root) {
         this.rowType = nodeType;
         this.root = root;
         constPoolGen = new ConstantPoolGen();
@@ -109,7 +111,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
 
         // Create a special class loader that knows only how to do one thing: create an instance
         // of the class we just created. First, define the class, then create a new instance.
-        // Since we know our class implements the Evalator interface, we can safely cast it.
+        // Since we know our class implements the Evaluator interface, we can safely cast it.
         try {
             return evaluatorLoader.getEvaluator(bytecode, generatedClassName);
         } catch (final Exception e) {
@@ -169,7 +171,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
      * @throws SQLException if something goes wrong
      */
     @Override
-    public void visit(final SqlBetweenExpression node) throws SQLException {
+    public void visit(final SqlBetweenExpression<E> node) throws SQLException {
         codeStack.addFirst(new CodeSnippetList());
         super.visit(node);
         
@@ -233,7 +235,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
     /**
      * For numbers, we add a snippet to the top of the code stack that pushes the
      * constant to the top of the JVM stack.
-     * @param node
+     * @param node the number to add to the top of the stack
      */
     @Override
     public void visit(final SqlNumber node) {
@@ -278,7 +280,7 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
      * @throws SQLException if something goes wrong
      */
     @Override
-    public void visit(final SqlArithmeticExpression node) throws SQLException {
+    public void visit(final SqlArithmeticExpression<E> node) throws SQLException {
         codeStack.addFirst(new CodeSnippetList());
         super.visit(node);
         final CodeSnippetList snippets = codeStack.removeFirst();
@@ -303,18 +305,35 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
     }
 
     @Override
-    public void visit(final SqlBooleanExpression node) throws SQLException {
+    public void visit(final SqlBooleanExpression<E> node) throws SQLException {
+        codeStack.addFirst(new CodeSnippetList());
         super.visit(node);
+        final CodeSnippetList snippets = codeStack.removeFirst();
+
+        // Boolean expressions have 2+ operands and one operator. We need to add
+        // the operator the number of operands minus one (e.g. x AND y becomes
+        // push x, push y, AND. The other option is a NOT, in which case we convert
+        // the TOS to 1 - tos.
+        final CodeSnippet expression = new CodeSnippet(BOOLEAN);
+        expression.append(snippets.asSnippet(BOOLEAN, null));
+        if (node.getRawOperator() == NOT) {
+            expression.append(new INEG());
+            expression.append(new ICONST(1));
+            expression.append(new IADD());
+        } else for (int i = 0; i < snippets.size() - 1; i++)
+            expression.append(node.getRawOperator() == AND ? new IAND() : new IOR());
+
+        codeStack.peekFirst().append(expression);
     }
 
     /**
-     * Comparisons have a left and a righ hand side. We push a new list to the top of
+     * Comparisons have a left and a right hand side. We push a new list to the top of
      * the code stack, then combine them along with a call to EvaluatorHelper.evalCompare.
      * @param node the comparison node
      * @throws SQLException if something goes wrong
      */
     @Override
-    public void visit(final SqlComparisonExpression node) throws SQLException {
+    public void visit(final SqlComparisonExpression<E> node) throws SQLException {
         codeStack.addFirst(new CodeSnippetList());
         super.visit(node);
         
@@ -342,13 +361,15 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
                 "evalCompare", signature);
 
         final CodeSnippet snippet = new CodeSnippet(BOOLEAN);
+        snippet.append(lhs);
+        snippet.append(rhs);
         snippet.append(new GETSTATIC(enumIndex));
         snippet.append(new INVOKESTATIC(helperIndex));
 
         // Top of stack now has a boolean
         final CodeSnippetList tos = codeStack.peekFirst();
-        tos.append(lhs);
-        tos.append(rhs);
+//        tos.append(lhs);
+//        tos.append(rhs);
         tos.append(snippet);
     }
 

@@ -20,7 +20,7 @@ import org.espresso.extension.SqlExtension;
 /**
  * @author <a href="mailto:binkley@alumni.rice.edu">B. K. Oxley (binkley)</a>
  */
-public class AgeBetween {
+class AgeBetween {
     /**
      * Matches the "when" field of {@code SimpleTestNode}.
      *

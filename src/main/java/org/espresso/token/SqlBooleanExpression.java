@@ -38,6 +38,10 @@ public class SqlBooleanExpression<E> extends SqlExpression<E> {
         return operator.toString();
     }
 
+    public SqlBooleanOperator getRawOperator() {
+        return operator;
+    }
+
     @Override
     public Object eval(final E row, final Map<String, FunctionExtension> functions) throws SQLException {
         return operator.eval(row, functions, operands);

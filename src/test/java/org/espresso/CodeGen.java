@@ -40,8 +40,9 @@ public class CodeGen {
     }
 
     private boolean test() {
-        final Object obj = null;
-        return EvaluatorHelper.evalIsNull(obj, true);
+        boolean a = true;
+        boolean b = false;
+        if(a && b) return true; else return false;
     }
     /**
      * Creates an instance of the following class on the fly:

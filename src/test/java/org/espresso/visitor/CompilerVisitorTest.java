@@ -99,6 +99,21 @@ public class CompilerVisitorTest {
         assertFalse(evaluator.matches(deal));
     }
 
+    @Test
+    public void testEquaNumeric() throws SQLException {
+        final SqlSelect statement = (SqlSelect) SqlParser.parse
+                ("select * from TestDeals where child = 2;");
+        final CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        final Evaluator evaluator = visitor.compile();
+        final TestDeal deal = new TestDeal();
+
+        deal.setChild(2);
+        assertTrue(evaluator.matches(deal));
+
+        deal.setChild(1);
+        assertFalse(evaluator.matches(deal));
+    }
+
 
     @Test
     public void testGreaterThanObject() throws SQLException {
@@ -158,5 +173,43 @@ public class CompilerVisitorTest {
         visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
         evaluator = visitor.compile();
         assertTrue(evaluator.matches(deal));
+    }
+
+    @Test
+    public void testBooleanExpression() throws SQLException {
+        SqlSelect statement = (SqlSelect) SqlParser.parse
+                ("select * from TestDeals where child = 0 and parent = 1");
+        CompilerVisitor<TestDeal> visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        Evaluator evaluator = visitor.compile();
+        TestDeal deal = new TestDeal();
+        deal.setParent(1);
+        deal.setChild(0);
+        assertTrue(evaluator.matches(deal));
+        deal.setParent(0);
+        assertFalse(evaluator.matches(deal));
+
+        statement = (SqlSelect) SqlParser.parse
+                ("select * from TestDeals where child = 0 or parent = 1");
+        visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        evaluator = visitor.compile();
+        deal = new TestDeal();
+        deal.setParent(1);
+        deal.setChild(1);
+        assertTrue(evaluator.matches(deal));
+        deal.setParent(0);
+        assertFalse(evaluator.matches(deal));
+
+        statement = (SqlSelect) SqlParser.parse
+                ("select * from TestDeals where not (child = 0 or parent = 1)");
+        visitor = new CompilerVisitor<TestDeal>(TestDeal.class, statement.getWhereClause());
+        evaluator = visitor.compile();
+        deal = new TestDeal();
+        deal.setParent(1);
+        deal.setChild(1);
+        assertFalse(evaluator.matches(deal));
+        deal.setParent(0);
+        assertTrue(evaluator.matches(deal));
+
+
     }
 }
