@@ -57,7 +57,7 @@ public enum SqlBooleanOperator {
         public Object eval(final Object row, final Map<String, FunctionExtension> functions,
                 final List<SqlExpressionNode> operands) throws SQLException {
             try {
-                boolean result = true;
+                boolean result = false;
                 for (SqlExpressionNode node : operands) {
                     result |= (Boolean) node.eval(row, functions);
                     if (result)

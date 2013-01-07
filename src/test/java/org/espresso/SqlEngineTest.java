@@ -307,6 +307,21 @@ public class SqlEngineTest {
     }
 
     @Test
+    public void shouldProcessNotTwoFalseOrs()
+            throws SQLException {
+        Collection<TestDeal> ds1 = restrict("select * from EnrichedDeal where not(label='label' or book = 'bob_the');", deal1);
+        assertThat(ds1, is(equalTo(singleDeal(deal1))));
+    }
+
+    @Test
+    public void deMorgansTest() throws Exception {
+        Collection<TestDeal> ds1 = restrict("select * from EnrichedDeal where deal_number='HH_Titanic' and not (label='label' or book='bob_the');", deal1);
+        Collection<TestDeal> ds2 = restrict("select * from EnrichedDeal where deal_number='HH_Titanic' and label<>'label' and book<>'bob_the');", deal1);
+
+        assertThat(ds1, is(equalTo(ds2)));
+    }
+
+    @Test
     public void testExtensions()
             throws SQLException {
         final SqlEngine<SimpleTestNode> sqlEngine = new SqlEngine<SimpleTestNode>(

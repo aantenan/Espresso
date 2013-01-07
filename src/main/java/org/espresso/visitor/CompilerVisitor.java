@@ -368,8 +368,6 @@ public class CompilerVisitor<E> extends SqlNodeVisitor<E> {
 
         // Top of stack now has a boolean
         final CodeSnippetList tos = codeStack.peekFirst();
-//        tos.append(lhs);
-//        tos.append(rhs);
         tos.append(snippet);
     }
 
